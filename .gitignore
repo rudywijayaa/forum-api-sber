@@ -1,0 +1,6 @@
+node_modules
+package-lock.json
+config/database/test.json
+coverage
+.env
+submission-forum-api.pem
