@@ -18,11 +18,11 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: developer
-          POSTGRES_PASSWORD: sangatrahasia
-          POSTGRES_DB: forumapi_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: submission-forum-api
+          POSTGRES_DB: forumapitest_rudy
         options: >-
-          --health-cmd "pg_isready -U developer -d forumapi_test"
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -45,13 +45,13 @@ jobs:
         env:
           CI: true
           HOST: localhost
-          PORT: 5000
+          PORT: 3000
           # point to the postgres service running in this runner
           PGHOST: localhost
           PGPORT: 5432
-          PGUSER: developer
-          PGPASSWORD: sangatrahasia
-          PGDATABASE: forumapi_test
+          PGUSER: postgres
+          PGPASSWORD: submission-forum-api
+          PGDATABASE: forumapitest_rudy
           # token secrets should be stored in your repo’s Settings → Secrets
           ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
           REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
