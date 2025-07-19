@@ -44,7 +44,6 @@ const createServer = async (container) => {
     { plugin: replies, options: { container } },
   ]);
 
-  // Global error handler
   server.ext('onPreResponse', (request, h) => {
     const { response } = request;
     if (response instanceof Error) {
