@@ -44,7 +44,7 @@ describe('HTTP server', () => {
       const server = await createServer({});
       // Action
       const response = await server.inject({
-        method: 'GET',
+        method: 'POST',
         url: '/',
       });
       // Assert
