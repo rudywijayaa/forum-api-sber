@@ -42,14 +42,14 @@ jobs:
           PORT: 3000
 
           # koneksi ke service postgres
-          PGHOST: postgres # <–– pakai 'postgres' bukan 'localhost'
+          PGHOST: localhost
           PGPORT: 5432
           PGUSER: postgres
           PGPASSWORD: submission-forum-api
           PGDATABASE: forumapitest_rudy
 
           # variabel khusus test, jika kode-mu membaca PG*_TEST
-          PGHOST_TEST: postgres
+          PGHOST_TEST: localhost
           PGPORT_TEST: 5432
           PGUSER_TEST: postgres
           PGPASSWORD_TEST: submission-forum-api
