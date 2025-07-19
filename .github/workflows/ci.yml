@@ -12,9 +12,9 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: submission-forum-api
-          POSTGRES_DB: forumapitest_rudy
+          POSTGRES_DB: forumapisber_test
         options: >-
-          --health-cmd "pg_isready -U postgres -d forumapitest_rudy" 
+          --health-cmd "pg_isready -U postgres -d forumapisber_test" 
           --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
