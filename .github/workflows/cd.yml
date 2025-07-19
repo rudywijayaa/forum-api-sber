@@ -18,8 +18,13 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            sudo apt update
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt install -y nodejs
+            sudo npm install -g pm2
+
             cd ~/forum-api-rudy
-            git pull origin master
+            git pull origin master --rebase
             npm install
             npm run migrate up
             pm2 restart forum-api-rudy
