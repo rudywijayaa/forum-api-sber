@@ -44,14 +44,6 @@ const createServer = async (container) => {
     { plugin: replies, options: { container } },
   ]);
 
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: () => ({
-      value: 'Hello world!',
-    }),
-  });
-
   // Global error handler
   server.ext('onPreResponse', (request, h) => {
     const { response } = request;
