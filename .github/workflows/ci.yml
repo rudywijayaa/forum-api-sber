@@ -1,42 +1,37 @@
 name: Continuous Integration
 
-on:
-  pull_request:
-    branches:
-      - master
+on: [pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     services:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: developer
-          POSTGRES_PASSWORD: sangatrahasia
-          POSTGRES_DB: forumapi_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: submission-forum-api
+          POSTGRES_DB: forumapitest_rudy
         options: >-
-          --health-cmd "pg_isready -U developer -d forumapi_test"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd "pg_isready -U postgres -d forumapitest_rudy" 
+          --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies, migrate & test
+      - name: Install, Migrate & Test
         run: |
           npm install
           npm run migrate up
@@ -44,14 +39,23 @@ jobs:
         env:
           CI: true
           HOST: localhost
-          PORT: 5000
-          # point to the postgres service running in this runner
+          PORT: 3000
+
+          # koneksi ke service postgres
           PGHOST: localhost
           PGPORT: 5432
-          PGUSER: developer
-          PGPASSWORD: sangatrahasia
-          PGDATABASE: forumapi_test
-          # token secrets should be stored in your repo’s Settings → Secrets
-          ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
-          REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
+          PGUSER: postgres
+          PGPASSWORD: submission-forum-api
+          PGDATABASE: forumapitest_rudy
+
+          # variabel khusus test, jika kode-mu membaca PG*_TEST
+          PGHOST_TEST: localhost
+          PGPORT_TEST: 5432
+          PGUSER_TEST: postgres
+          PGPASSWORD_TEST: submission-forum-api
+          PGDATABASE_TEST: forumapitest_rudy
+
+          # token secrets
+          ACCESS_TOKEN_KEY: secret
+          REFRESH_TOKEN_KEY: terces
           ACCESS_TOKEN_AGE: 3000
